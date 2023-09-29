@@ -1,4 +1,4 @@
-
+const input = require('readline-sync');
 
 // TODO 2: modify your quiz app to ask 5 questions //
 
@@ -17,42 +17,63 @@ let questions = ["Who was the first American woman in space? " ,
   "Given the array [8, 'Orbit', 'Trajectory', 45], what entry is at index 2? " ,
   "What is the minimum crew size for the ISS? " ];
 let correctAnswers = ["Sally Ride", "true", "40", "Trajectory", "3"];
-let candidateAnswers;
-
+let candidateAnswers = [];
 function askForName() {
   // TODO 1.1b: Ask for candidate's name //
-//  candidateName = console.log(input.question("What's your name? "));
 const input = require('readline-sync');
-candidateName = input.question("What's your name? ");
+ candidateName = input.question("What's your name? ");
 
 
 }
 
 function askQuestion() {
   // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer //
-let candidateAnswers = []
 for (let i = 0; i < questions.length; i++){
-  let answer = input.question(questions[i]);
-  candidateAnswers.push(answer);
+  candidateAnswers.push(input.question(questions[i]));
+    //candidateAnswers.push(answer);
+
+
 }
 }
 
-function gradeQuiz() {
+function gradeQuiz(candidateAnswers) {
 
   // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly // 
 for (let i = 0; i < questions.length; i++){
   console.log(`Question ${i + 1}: ${questions[i]}`);
-  console.log(`Candidate's Answer: ${candidateAnswers[i]}`);
   console.log(`Correct Answer: ${correctAnswers[i]}`);
-  console.log("/n");
+  console.log(`Your Answer: ${candidateAnswers[i]}`);
+  console.log('\n');
 }
 
+//let caseInsensitiveCorrectAnswers = correctAnswers.join(",").toLowerCase().split(",");
+//let caseInsensitiveCandidateAnswers = candidateAnswers.join(",").toLowerCase().split(",");
 
-  let grade;  //TODO 3.2 use this variable to calculate the candidates score.
 
+let numberCorrect = 0;
+for (let i = 0; i < correctAnswers.length; i++) {
+ // console.log(typeof(candidateAnswers[i]) + "to check");
+  //if (caseInsensitiveCandidateAnswers[i] === caseInsensitiveCorrectAnswers[i]) {
+   if (candidateAnswers[i].toLowerCase() === correctAnswers[i].toLowerCase()) {
+  numberCorrect++;
+  }
+ }
+ let grade = (numberCorrect / 5) * 100;
+console.log(grade);
 
+console.log(numberCorrect);
+
+  console.log("Candidate's Score: " + grade + "%")
+  if (grade >= 80) {
+    console.log("You have passed the quiz.");
+  } else {
+    console.log("You have failed the quiz.")
+  }
   return grade;
 }
+
+ 
+
 
 function runProgram() {
   askForName();
@@ -72,5 +93,5 @@ module.exports = {
   correctAnswers: correctAnswers,
   candidateAnswers: candidateAnswers,
   gradeQuiz: gradeQuiz,
-  runProgram: runProgram
+  runProgram: runProgram 
 };
